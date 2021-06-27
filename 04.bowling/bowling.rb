@@ -12,7 +12,7 @@ framebox = 0
 scores.each do |s|
   if framebox >= 18
     if s == 'X'
-      shots << 10q
+      shots << 10
       framebox += 1
       next
     end
@@ -56,11 +56,7 @@ frames.each_with_index do |_frame, i|
              10 + frames[i + 1][0]
            elsif i == 9
              if frames[i][0] == 10
-               if frames[i][1] == 10
-                 20 + frames[i][2]
-               else
-                 10 + frames[i][1]
-               end
+               frames[i][1] == 10 ? 20 + frames[i][2] : 10 + frames[i][1]
              elsif frames[i][0] != 10 && frames[i][0] + frames[i][1] == 10
                10 + frames[i][2]
              else
@@ -71,4 +67,3 @@ frames.each_with_index do |_frame, i|
            end
 end
 puts point
-
