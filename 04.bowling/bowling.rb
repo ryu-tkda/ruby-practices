@@ -29,7 +29,7 @@ frames.each_with_index do |frame, i|
   point += if i < 8 && frame[0] == 10
              frames[i + 1][0] == 10 ? 20 + frames[i + 2][0] : 10 + (frames[i + 1]).sum
            elsif i == 8 && frame[0] == 10
-             frames[i + 1][0] == 10 ? 20 + frames[i + 1][1] : 10 + frames[i + 1][0] + frames[i + 1][1]
+             10 + frames[i + 1][0] + frames[i + 1][1]
            elsif i != 9 && frame.sum == 10
              10 + frames[i + 1][0]
            else
