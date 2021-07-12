@@ -34,6 +34,26 @@ def user_group_name
   print group_name
   print '  '
 end
+def file_permission(permission)
+  case permission
+  when '0'
+    print '---'
+  when '1'
+    print '--x'
+  when '2'
+    print '-w-'
+  when '3'
+    print '-wx'
+  when '4'
+    print 'r--'
+  when '5'
+    print 'r-x'
+  when '6'
+    print 'rw-'
+  when '7'
+    print 'rwx'
+  end
+end
 
 opt = OptionParser.new
 params = opt.getopts(ARGV, 'alr')
@@ -63,24 +83,7 @@ if params['l']
     file_type(files_info.ftype)
     permissions = files_info.mode.to_s(8).split(//).pop(3)
     permissions.each do |permission|
-      case permission
-      when '0'
-        print '---'
-      when '1'
-        print '--x'
-      when '2'
-        print '-w-'
-      when '3'
-        print '-wx'
-      when '4'
-        print 'r--'
-      when '5'
-        print 'r-x'
-      when '6'
-        print 'rw-'
-      when '7'
-        print 'rwx'
-      end
+      file_permission(permission)
     end
     print '  '
     print files_info.nlink
