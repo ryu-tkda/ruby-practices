@@ -3,6 +3,19 @@
 
 require 'optparse'
 require 'etc'
+def results(file)
+  column = 3
+  fsize = file.size
+  row = fsize / column
+  row += 1 if trust != 0
+  result = Array.new(column) { Array.new(row) }
+  (0...column).each do |col_index|
+    (0...row).each do |row_index|
+      result[col_index][row_index] = file.shift if row_index.zero? || file.size >= (column - col_index)
+    end
+  end
+  result
+end
 
 def file_type(type)
   types = { "fifo": 'p', "characterSpecial": 'c', "directory": 'd', "blockSpecial": 'b', "file": '-', "link": 'l', "socket": 's' }
@@ -55,15 +68,7 @@ if params['l']
   end
 else
   max_size = files.map(&:size).max
-  column = 3
-  fsize = files.size
-  lines = fsize / column
-  trust = fsize % column
-  lines += 1 if trust != 0
-  line = files.each_slice(lines).to_a
-  line.map! { |a| a.values_at(0..lines) }
-  results = line.transpose
-  results.map do |items|
+  results(files).transpose.each do |items|
     puts items.map { |item| format("%-#{max_size}s  ", item) }.join
   end
 end
